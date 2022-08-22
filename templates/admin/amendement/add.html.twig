@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Amendement
+{% endblock %}
+
+{% block body %}
+	<h1>Create new Amendement</h1>
+
+	{{ include('amendement/_form.html.twig') }}
+
+	<a href="{{ path('amendement_list') }}">back to list</a>
+{% endblock %}

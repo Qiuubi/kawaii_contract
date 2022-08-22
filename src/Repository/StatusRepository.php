@@ -45,6 +45,20 @@ class StatusRepository extends ServiceEntityRepository
         }
     }
 
+    public function statusName()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT s.name
+            FROM App\Entity\Status s
+            ORDER BY s.name ASC'
+        );
+
+        // returns an array of Product objects
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Status[] Returns an array of Status objects
     //  */

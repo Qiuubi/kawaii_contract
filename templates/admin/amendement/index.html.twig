@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Amendement index
+{% endblock %}
+
+{% block body %}
+	<h1>Amendement index</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Term</th>
+				<th>DateEffect</th>
+				<th>DateEnding</th>
+				<th>CreatedAt</th>
+				<th>NewProvisions</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for amendement in amendements %}
+				<tr>
+					<td>{{ amendement.id }}</td>
+					<td>{{ amendement.name }}</td>
+					<td>{{ amendement.description }}</td>
+					<td>{{ amendement.term }}</td>
+					<td>{{ amendement.dateEffect ? amendement.dateEffect|date('Y-m-d') : '' }}</td>
+					<td>{{ amendement.dateEnding ? amendement.dateEnding|date('Y-m-d') : '' }}</td>
+					<td>{{ amendement.createdAt ? amendement.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+					<td>{{ amendement.newProvisions }}</td>
+					<td>
+						<a href="{{ path('amendement_show', {'id': amendement.id}) }}">show</a>
+						<a href="{{ path('amendement_edit', {'id': amendement.id}) }}">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="9">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_amendement_new') }}">Create new</a>
+{% endblock %}

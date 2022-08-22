@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ContractRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ContractRepository::class)]
@@ -135,6 +137,17 @@ class Contract
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $entireAgreement;
+
+    #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'contracts')]
+    private $product;
+
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $extension;
+
+    public function __construct()
+    {
+        $this->product = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -632,4 +645,41 @@ class Contract
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getProduct(): Collection
+    {
+        return $this->product;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->product->contains($product)) {
+            $this->product[] = $product;
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        $this->product->removeElement($product);
+
+        return $this;
+    }
+
+    public function getExtension(): ?bool
+    {
+        return $this->extension;
+    }
+
+    public function setExtension(?bool $extension): self
+    {
+        $this->extension = $extension;
+
+        return $this;
+    }
+
 }

@@ -45,6 +45,20 @@ class CategoryRepository extends ServiceEntityRepository
         }
     }
 
+    public function categoryName()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT cat.name
+            FROM App\Entity\Category cat
+            ORDER BY cat.name ASC'
+        );
+
+        // returns an array of Product objects
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Category[] Returns an array of Category objects
     //  */

@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use App\Entity\Amendement;
 use App\Entity\Contract;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
@@ -58,13 +57,9 @@ class ContractRepository extends ServiceEntityRepository
     public function showInProgressContracts()
     {
         return $this->createQueryBuilder('ctt')
-            // SELECT * FROM `contract` as c LEFT JOIN `amendement` as a ON c.id = a.contract_id 
-            // ->addSelect('a')
-            // ->from('App\Entity\Amendement', 'a')
-            // ->leftJoin('a.contract', 'ON', 'ctt.id = a.contract')
             ->where('ctt.status != 6')
-            ->orderBy('ctt.dateEffect', 'DESC')
-            ->setMaxResults(10)
+            ->orderBy('ctt.dateEffect', 'ASC')
+            ->setMaxResults(5)
             ->getQuery()
             ->getResult();
     }
@@ -80,6 +75,72 @@ class ContractRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function contractName()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT ctt.name
+            FROM App\Entity\Contract ctt
+            ORDER BY ctt.name ASC'
+        );
+
+        return $query->getResult();
+    }
+
+    public function searchByName($names = null)
+    {
+
+        return $this->createQueryBuilder('ctt')
+            ->where('ctt.name = :name')
+            ->setParameter('name', $names)
+            ->orderBy('ctt.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function searchByCategory($category = null)
+    {
+        return $this->createQueryBuilder('ctt')
+            ->join('ctt.category', "cat")
+            ->where('cat.name = :category')
+            ->setParameter('category', $category)
+            ->orderBy('ctt.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function searchByStatus($status = null)
+    {
+        return $this->createQueryBuilder('ctt')
+            ->join('ctt.status', "s")
+            ->where('s.name = :status')
+            ->setParameter('status', $status)
+            ->orderBy('s.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    // tester 
+
+    public function searchAllConditions($names = null, $category = null, $status = null, $products = null)
+    {
+
+        return $this->createQueryBuilder('ctt')
+            ->where('ctt.name = :name')
+            ->setParameter('name', $names)
+            ->join('ctt.category', "cat")
+            ->andWhere('cat.name = :category')
+            ->setParameter('category', $category)
+            ->join('ctt.status', "s")
+            ->andWhere('s.name = :status')
+            ->setParameter('status', $status)
+            ->orderBy('ctt.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 
     // /**
     //  * @return Contract[] Returns an array of Contract objects

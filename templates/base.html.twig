@@ -59,7 +59,7 @@ cnt.style.display = "flex";
 						<a href="{{path('contracts')}}">Contrats</a>
 					</li>
 					<li class="kawaii-contract-nav-li">
-						<a href="">Rechercher</a>
+						<a href="{{path('search')}}">Rechercher</a>
 					</li>
 					{% if is_granted("ROLE_ADMIN") %}
 						<li class="kawaii-contract-nav-li">
@@ -77,6 +77,9 @@ cnt.style.display = "flex";
 			</nav>
 		</header>
 		{% block body %}{% endblock %}
+		<section class="kawaii-contract-section-logo {% if app.request.get('_route') == 'contracts' %}all-contracts{% elseif app.request.get('_route') == 'search' %}search{% elseif app.request.get('_route') == 'admin' %}dashboard{% else %}home{% endif %}">
+			<img id="kawaii-contract-logo" src="{{ asset('build/images/KawaiiContractLogo.png') }}" alt="Kawaii Contract logo">
+		</section>
 	</body>
 	<style>
 
@@ -118,7 +121,10 @@ cnt.style.display = "flex";
 		.kawaii-contract-details-circle,
 		.kawaii-contract-white-circle-border,
 		.kawaii-contract-white-background,
-		.kawaii-contract-details-aside {
+		.kawaii-contract-details-aside,
+		.button-back,
+		.kawaii-contract-amendement-bar-progress,
+		.kawaii-contract-search-li > select {
 			background-color: #FFFFFF;
 		}
 
@@ -136,36 +142,74 @@ cnt.style.display = "flex";
 			color: #FFC6FF;
 		}
 
+		.kawaii-contract-nav,
+		.kawaii-contract-nav-li > a,
+		.kawaii-contract-search-li,
+		.kawaii-contract-search-li > select,
+		.button-search,
+		.kawaii-contract-first-block-container,
+		.kawaii-contract-first-block-progress-bar {
+			padding: 10px;
+		}
+
 		#kawaii-contract-banner,
 		.kawaii-contract-nav,
+		.kawaii-contract-nav > ul,
 		.kawaii-contract-first-block-container,
 		.kawaii-contract-details-block,
 		.kawaii-contract-details-circle,
+		.kawaii-contract-details-circle-container,
 		.kawaii-contract-status-circle,
 		.kawaii-contract-white-background,
 		#kawaii-contract-logo,
 		.kawaii-contract-details-aside,
+		.amendement-lists.in-progress,
 		.kawaii-contract-amendement-block,
-		.kawaii-contract-provision.amendements-lists {
+		.kawaii-contract-provision.amendements-lists,
+		.kawaii-contract-lists > ul,
+		.kawaii-contract-fast-add > ul,
+		.kawaii-contract-details-block.dashboard,
+		.kawaii-contract-category-color-inside.dashboard,
+		.kawaii-contract-structure-container,
+		.kawaii-contract-structure-inputs,
+		.kawaii-contract-search-form > ul,
+		.kawaii-contract-no-results {
 			display: flex;
 		}
 
 		.kawaii-contract-nav,
 		.kawaii-contract-part,
 		.kawaii-contract-first-block,
-		.kawaii-contract-details-block {
+		.kawaii-contract-details-block,
+		.kawaii-contract-details-aside,
+		.kawaii-contract-form,
+		.kawaii-contract-structure,
+		.kawaii-contract-structure-inputs > input,
+		.kawaii-contract-structure-inputs > select,
+		.kawaii-contract-structure-inputs > div > select,
+		.button-submit,
+		.button-back,
+		.button-search {
 			border-radius: 30px;
 		}
 
-		.kawaii-contract-nav {
+		.kawaii-contract-nav,
+		.kawaii-contract-category-color-inside.dashboard,
+		.kawaii-contract-search-form > ul {
 			justify-content: center;
+		}
+
+		.kawaii-contract-nav {
 			border: 3px solid;
 		}
 
-		.kawaii-contract-nav-li > a {
+		.kawaii-contract-nav-li > a,
+		.total-term.in-progress {
 			font-weight: bold;
+		}
+
+		.kawaii-contract-nav-li > a {
 			font-size: 20px;
-			padding: 20px 0;
 			transition-duration: 1s;
 		}
 
@@ -173,19 +217,28 @@ cnt.style.display = "flex";
 			color: #FF98FF;
 		}
 
-		/* I. HOME */
 		.kawaii-contract-body.home,
-		.kawaii-contract-footer.home {
+		.kawaii-contract-section-logo.home {
 			background-color: #FEECFE;
 		}
 
 		.kawaii-contract-body.all-contracts,
-		.kawaii-contract-footer.all-contracts {
+		.kawaii-contract-section-logo.all-contracts {
 			background-color: #F8FFE5;
 		}
 
+		.kawaii-contract-body.dashboard,
+		.kawaii-contract-section-logo.dashboard {
+			background-color: #EDFFFF;
+		}
+
+		.kawaii-contract-body.search,
+		.kawaii-contract-section-logo.search {
+			background-color: #FFF4F4;
+		}
+
 		.kawaii-contract-body,
-		.kawaii-contract-footer {
+		.kawaii-contract-section-logo {
 			padding-bottom: 5px;
 		}
 
@@ -194,7 +247,9 @@ cnt.style.display = "flex";
 		}
 
 		.kawaii-contract-part.home,
-		.kawaii-contract-part.all-contracts {
+		.kawaii-contract-part.dashboard,
+		.kawaii-contract-part.search,
+		.kawaii-contract-form {
 			margin: 10px auto;
 			width: 99%;
 		}
@@ -207,10 +262,21 @@ cnt.style.display = "flex";
 			border: 5px solid #BAFF00;
 		}
 
+		.kawaii-contract-part.search {
+			border: 5px solid #FF9999;
+		}
+
+		.kawaii-contract-part.dashboard,
+		.kawaii-contract-details-circle.dashboard,
+		.kawaii-contract-form {
+			border: 5px solid #00ADAD;
+		}
+
 		.kawaii-contract-main-title {
 			padding: 20px;
 			font-family: 'Roboto';
 			font-size: 20px;
+			text-align: center;
 		}
 
 		.kawaii-contract-main-title.last-contracts,
@@ -259,10 +325,38 @@ cnt.style.display = "flex";
 			color: #8FC100;
 		}
 
+		.kawaii-contract-search-li > label,
+		.kawaii-contract-search-li > select,
+		.kawaii-contract-main-title.search,
+		.kawaii-contract-icon-down-arrow.search,
+		.kawaii-contract-first-block-name.search,
+		.name-contract.search,
+		.name-companies.search,
+		.name-companies-quality.search,
+		.name-user.search {
+			color: #FF4343;
+		}
+
+		.kawaii-contract-list > a,
+		.kawaii-contract-fast-add-li > a,
+		.kawaii-contract-main-title.dashboard,
+		.ourcompany-contract.dashboard,
+		.partner-contract.dashboard,
+		.kawaii-contract-title-structure,
+		.kawaii-contract-structure-inputs > label {
+			color: #005959;
+		}
+
+		.kawaii-contract-list > a:hover,
+		.kawaii-contract-fast-add-li > a:hover {
+			color: #5C9595;
+		}
+
+		.kawaii-contract-list > a,
+		.kawaii-contract-fast-add-li > a,
 		.kawaii-contract-first-block,
 		.kawaii-contract-details-block {
 			transition-duration: 0.5s;
-			width: 97%;
 		}
 
 		.kawaii-contract-first-block:hover,
@@ -281,7 +375,7 @@ cnt.style.display = "flex";
 
 		.kawaii-contract-first-block,
 		.kawaii-contract-details-block {
-			width: 99%;
+			width: 97%;
 			border-radius: 20px;
 		}
 
@@ -306,29 +400,39 @@ cnt.style.display = "flex";
 		.kawaii-contract-first-block.all-contracts,
 		.kawaii-contract-details-block.all-contracts {
 			background-color: #E9FFAB;
-			box-shadow: 0 5px 5px #E7FFA3;
+			box-shadow: 0 5px 5px #D2E894;
+		}
+
+		.kawaii-contract-first-block.search,
+		.kawaii-contract-details-block.search {
+			background-color: #FFCCCC;
+			box-shadow: 0 5px 5px #CCA3A3;
+		}
+
+		.kawaii-contract-details-block.dashboard {
+			background-color: #CCFFFF;
+			box-shadow: 0 5px 5px #B2DFDF;
 		}
 
 		.kawaii-contract-first-block-container,
 		.kawaii-contract-details-circle,
 		.kawaii-contract-white-background,
-		.kawaii-contract-amendement-block {
+		.kawaii-contract-amendement-block,
+		.kawaii-contract-search-form > ul {
 			align-items: center;
 		}
 
 		.kawaii-contract-first-block-container,
-		.kawaii-contract-first-block-progress-bar {
-			padding: 10px;
-		}
-
-		.kawaii-contract-first-block-container {
+		.kawaii-contract-lists > ul,
+		.kawaii-contract-fast-add > ul {
 			justify-content: space-around;
 		}
 
 		.kawaii-contract-category-color,
 		.kawaii-contract-category-color-inside,
 		.kawaii-contract-first-block-progress-bar,
-		.kawaii-contract-progress-bar-inside {
+		.kawaii-contract-progress-bar-inside,
+		.kawaii-contract-structure-inputs > textarea {
 			border-radius: 10px;
 		}
 
@@ -339,6 +443,12 @@ cnt.style.display = "flex";
 		.kawaii-contract-category-color-inside {
 			width: 40px;
 			height: 40px;
+		}
+
+		.kawaii-contract-category-color-inside.dashboard {
+			width: 100px;
+			height: 100px;
+			border-radius: 100%;
 		}
 
 		.kawaii-contract-icon-down-arrow,
@@ -385,20 +495,36 @@ cnt.style.display = "flex";
 			fill: #8FC100;
 		}
 
-		.kawaii-contract-amendement-block.soon-finish > .svg-icon path {
+		.kawaii-contract-first-block-container.search > .kawaii-contract-icon-down-arrow path,
+		.kawaii-contract-provision.search > .svg-icon path {
+			fill: #FF4343;
+		}
+
+		.kawaii-contract-amendement-block > .svg-icon path {
 			fill: #FFFFFF;
+		}
+
+		a > .svg-icon.kawaii-contract-icon.dashboard path,
+		.kawaii-contract-provision.dashboard > .svg-icon path {
+			fill: #008C8C;
 		}
 
 		.kawaii-contract-first-block-name {
 			width: 40%;
 		}
 
-		.kawaii-contract-first-block-progress-bar {
+		.kawaii-contract-first-block-progress-bar,
+		.kawaii-contract-structure-inputs {
 			padding: 10px;
 		}
 
 		.kawaii-contract-progress-bar-inside {
 			height: 25px;
+		}
+
+		.kawaii-contract-progress-bar-inside,
+		.kawaii-contract-provision {
+			transition-duration: 1s;
 		}
 
 		.kawaii-contract-progress-bar-inside.last-contracts {
@@ -407,7 +533,6 @@ cnt.style.display = "flex";
 
 		.kawaii-contract-progress-bar-inside.last-contracts:hover {
 			background-color: #A1B8CE;
-			transition-duration: 1s;
 		}
 
 		.kawaii-contract-progress-bar-inside.in-progress {
@@ -416,12 +541,10 @@ cnt.style.display = "flex";
 
 		.kawaii-contract-progress-bar-inside.in-progress:hover {
 			background-color: #C3C1FF;
-			transition-duration: 1s;
 		}
 
 		.kawaii-contract-progress-bar-inside.soon-finish {
 			background-color: #FFE0C1;
-			transition-duration: 1s;
 		}
 
 		.kawaii-contract-progress-bar-inside.soon-finish:hover {
@@ -437,10 +560,19 @@ cnt.style.display = "flex";
 			background-color: #C3E367;
 		}
 
+		.kawaii-contract-progress-bar-inside.search {
+			background-color: #FF9999;
+		}
+
+		.kawaii-contract-progress-bar-inside.soon-search:hover {
+			background-color: #CC7A7A;
+		}
+
 		.kawaii-contract-details-block,
 		.kawaii-contract-white-background {
 			justify-content: space-between;
 		}
+
 
 		.kawaii-contract-white-background {
 			width: 400px;
@@ -448,7 +580,10 @@ cnt.style.display = "flex";
 		}
 
 		.kawaii-contract-details-circle,
-		.kawaii-contract-status-circle {
+		.kawaii-contract-status-circle,
+		.kawaii-contract-details-circle-container,
+		.kawaii-contract-category-color-inside.dashboard,
+		.kawaii-contract-structure-container {
 			justify-content: center;
 			align-items: center;
 		}
@@ -470,9 +605,29 @@ cnt.style.display = "flex";
 			border: 10px solid #FF9C38;
 		}
 
+		.kawaii-contract-details-circle.all-contracts {
+			border: 10px solid #D9FD73;
+		}
+
+		.kawaii-contract-details-circle.search {
+			border: 10px solid #ff9999;
+		}
+
+		.kawaii-contract-details-circle.dashboard {
+			width: 250px;
+			height: 250px;
+		}
+
 		.kawaii-contract-white-background {
 			width: 400px;
 			height: 400px;
+		}
+
+		.kawaii-contract-white-background.dashboard {
+			width: 160px;
+			height: 160px;
+			display: flex;
+			justify-content: center;
 		}
 
 		.kawaii-contract-status-circle {
@@ -480,8 +635,15 @@ cnt.style.display = "flex";
 			height: 450px;
 		}
 
+		.kawaii-contract-status-circle.dashboard {
+			width: 200px;
+			height: 200px;
+		}
+
+		.kawaii-contract-details-circle-container,
 		.kawaii-contract-white-background,
-		.kawaii-contract-amendement-block {
+		.kawaii-contract-amendement-block,
+		.kawaii-contract-structure-inputs {
 			flex-direction: column;
 		}
 
@@ -501,7 +663,9 @@ cnt.style.display = "flex";
 			font-size: 18px;
 		}
 
-		.name-companies-quality {
+		.name-companies-quality,
+		.kawaii-contract-category-color-inside.dashboard,
+		.kawaii-contract-title-structure {
 			text-align: center;
 		}
 
@@ -511,7 +675,10 @@ cnt.style.display = "flex";
 
 		.kawaii-contract-details-aside {
 			width: 100%;
-			border-radius: 30px;
+		}
+
+		.kawaii-contract-details-part-list.dashboard {
+			width: 20%
 		}
 
 		.kawaii-contract-details-aside.last-contracts {
@@ -526,13 +693,14 @@ cnt.style.display = "flex";
 			border: 5px solid #FF9C38;
 		}
 
-		.kawaii-contract-provision {
-			font-family: 'Roboto Thin';
-			font-size: 16px;
+		.kawaii-contract-details-aside.all-contracts {
+			border: 5px solid #BAFF00;
 		}
 
-		.kawaii-contract-provision {
-			transition-duration: 1s;
+		.kawaii-contract-provision,
+		.kawaii-contract-search-li > select {
+			font-family: 'Roboto Thin';
+			font-size: 16px;
 		}
 
 		.kawaii-contract-provision.last-contracts {
@@ -543,6 +711,10 @@ cnt.style.display = "flex";
 			color: #0A00FF;
 		}
 
+		.amendement-lists.in-progress {
+			flex-wrap: wrap;
+		}
+
 		.kawaii-contract-provision.soon-finish {
 			color: #FF8000;
 		}
@@ -551,21 +723,54 @@ cnt.style.display = "flex";
 			color: #8FC100;
 		}
 
+		.kawaii-contract-provision.dashboard {
+			color: #008C8C;
+		}
+
+		.kawaii-contract-provision.search {
+			color: #FF4343;
+		}
+
+		.kawaii-contract-amendement-block,
+		.kawaii-contract-title-structure {
+			margin: 10px;
+		}
+
 		.kawaii-contract-amendement-block {
 			width: 100px;
-			margin: 10px;
 			padding: 10px;
 			color: #ffffff;
 			border-radius: 20px;
 		}
 
+		.kawaii-contract-amendement-block.soon-finish,
+		.kawaii-contract-amendement-block.in-progress,
+		.kawaii-contract-amendement-block.dashboard {
+			transition-duration: 1s;
+		}
+
+		.kawaii-contract-amendement-block.in-progress {
+			background-color: #5750ff;
+		}
+
+		.kawaii-contract-amendement-block.in-progress:hover {
+			background-color: #7973FF;
+		}
+
 		.kawaii-contract-amendement-block.soon-finish {
 			background-color: #FF8000;
-			transition-duration: 1s;
 		}
 
 		.kawaii-contract-amendement-block.soon-finish:hover {
 			background-color: #FBB36B;
+		}
+
+		.kawaii-contract-amendement-block.dashboard {
+			background-color: #00adad;
+		}
+
+		.kawaii-contract-amendement-block.dashboard:hover {
+			background-color: #33BDBD;
 		}
 
 		.kawaii-contract-amendement-block:hover {
@@ -576,6 +781,132 @@ cnt.style.display = "flex";
 			font-family: 'Roboto Thin';
 			font-size: 12px;
 		}
-	</style>
 
+		.kawaii-contract-amendement-bar-progress,
+		.kawaii-contract-no-results,
+		.kawaii-contract-search-li > select {
+			border-radius: 30px;
+		}
+
+		.kawaii-contract-amendement-bar-progress {
+			margin-top: 5px;
+			height: 10px;
+		}
+
+		.kawaii-contract-structure {
+			margin: 10px;
+			padding: 10px 0;
+			background-color: #edffff;
+		}
+
+		.kawaii-contract-structure-container {
+			align-items: start;
+		}
+
+		.kawaii-contract-structure-inputs > label {
+			margin-bottom: 5px;
+		}
+
+		.kawaii-contract-structure-inputs > input,
+		.kawaii-contract-structure-inputs > select,
+		.kawaii-contract-structure-inputs > textarea,
+		.kawaii-contract-structure-inputs > div > select,
+		.button-submit,
+		.button-back,
+		.kawaii-contract-no-results {
+			margin-bottom: 10px;
+		}
+
+		.kawaii-contract-structure-inputs > input,
+		.kawaii-contract-structure-inputs > select,
+		.kawaii-contract-structure-inputs > textarea,
+		.kawaii-contract-structure-inputs > div > select,
+		.button-submit,
+		.button-back {
+			font-size: 20px;
+			padding: 10px 2px;
+		}
+
+		.kawaii-contract-structure-inputs > input,
+		.kawaii-contract-structure-inputs > select,
+		.kawaii-contract-structure-inputs > textarea,
+		.kawaii-contract-structure-inputs > div > select {
+			border: 2px solid #00adad;
+			background-color: #00adad;
+			color: #ffffff;
+		}
+
+		.kawaii-contract-structure-inputs.fundamentals > input,
+		.kawaii-contract-structure-inputs.marketing > input,
+		.kawaii-contract-structure-inputs.logistic-payment > input,
+		.kawaii-contract-structure-inputs.contractual-tech > input {
+			width: 500px;
+		}
+
+		.button-submit,
+		.button-back,
+		.kawaii-contract-no-results {
+			margin: 0 auto;
+		}
+
+		.button-back {
+			width: 200px;
+		}
+
+		.button-submit,
+		.button-search {
+			color: #ffffff;
+		}
+
+		.button-submit {
+			border: 2px solid #00adad;
+			background-color: #006E6E;
+			transition-duration: 0.5s;
+		}
+
+		.button-submit:hover,
+		.button-search:hover {
+			cursor: pointer;
+		}
+
+		.button-submit:hover {
+			border: 2px solid #006E6E;
+			background-color: #00adad;
+		}
+
+		.button-back {
+			margin-top: 10px;
+			text-align: center;
+			border: 2px solid #00adad;
+			color: #00adad;
+			transition-duration: 0.5s;
+		}
+
+		.button-search {
+			border: 2px solid #FF4343;
+			background-color: #FF4343;
+			transition-duration: 0.5s;
+		}
+
+		.button-search:hover {
+			background-color: #ffffff;
+			color: #FF4343;
+		}
+
+		.button-back.add-company {
+			margin-top: unset;
+		}
+
+		.button-back:hover {
+			background-color: #DDF4F4
+		}
+
+		.kawaii-contract-structure-inputs > textarea {
+			height: 200px;
+		}
+
+		.kawaii-contract-search-li > select {
+			border: 2px solid #FF4343;
+		}
+	</style>
 </html>

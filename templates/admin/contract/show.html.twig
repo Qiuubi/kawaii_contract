@@ -1,0 +1,166 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contract{% endblock %}
+
+{% block body %}
+    <h1>Contract</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ contract.id }}</td>
+            </tr>
+            <tr>
+                <th>Number</th>
+                <td>{{ contract.number }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ contract.name }}</td>
+            </tr>
+            <tr>
+                <th>OurCompanyQuality</th>
+                <td>{{ contract.ourCompanyQuality }}</td>
+            </tr>
+            <tr>
+                <th>PartnerQuality</th>
+                <td>{{ contract.partnerQuality }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ contract.description }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ contract.createdAt ? contract.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Purpose</th>
+                <td>{{ contract.purpose }}</td>
+            </tr>
+            <tr>
+                <th>Territory</th>
+                <td>{{ contract.territory }}</td>
+            </tr>
+            <tr>
+                <th>Term</th>
+                <td>{{ contract.term }}</td>
+            </tr>
+            <tr>
+                <th>DateEffect</th>
+                <td>{{ contract.dateEffect ? contract.dateEffect|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateEnding</th>
+                <td>{{ contract.dateEnding ? contract.dateEnding|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ contract.price }}</td>
+            </tr>
+            <tr>
+                <th>PriceRevision</th>
+                <td>{{ contract.priceRevision }}</td>
+            </tr>
+            <tr>
+                <th>ApplicableLaw</th>
+                <td>{{ contract.applicableLaw }}</td>
+            </tr>
+            <tr>
+                <th>Dispute</th>
+                <td>{{ contract.dispute }}</td>
+            </tr>
+            <tr>
+                <th>Language</th>
+                <td>{{ contract.language }}</td>
+            </tr>
+            <tr>
+                <th>Registration</th>
+                <td>{{ contract.registration }}</td>
+            </tr>
+            <tr>
+                <th>MarketingRate</th>
+                <td>{{ contract.marketingRate }}</td>
+            </tr>
+            <tr>
+                <th>Reports</th>
+                <td>{{ contract.reports }}</td>
+            </tr>
+            <tr>
+                <th>SellObjectives</th>
+                <td>{{ contract.sellObjectives }}</td>
+            </tr>
+            <tr>
+                <th>Stocks</th>
+                <td>{{ contract.stocks }}</td>
+            </tr>
+            <tr>
+                <th>RetentionPeriod</th>
+                <td>{{ contract.retentionPeriod }}</td>
+            </tr>
+            <tr>
+                <th>NoCompetition</th>
+                <td>{{ contract.noCompetition }}</td>
+            </tr>
+            <tr>
+                <th>SellInternet</th>
+                <td>{{ contract.sellInternet }}</td>
+            </tr>
+            <tr>
+                <th>SupplyOrders</th>
+                <td>{{ contract.supplyOrders }}</td>
+            </tr>
+            <tr>
+                <th>Delivery</th>
+                <td>{{ contract.delivery }}</td>
+            </tr>
+            <tr>
+                <th>Reception</th>
+                <td>{{ contract.reception }}</td>
+            </tr>
+            <tr>
+                <th>Payment</th>
+                <td>{{ contract.payment }}</td>
+            </tr>
+            <tr>
+                <th>Penalties</th>
+                <td>{{ contract.penalties }}</td>
+            </tr>
+            <tr>
+                <th>RetentionTitle</th>
+                <td>{{ contract.retentionTitle }}</td>
+            </tr>
+            <tr>
+                <th>Liability</th>
+                <td>{{ contract.liability }}</td>
+            </tr>
+            <tr>
+                <th>Insurance</th>
+                <td>{{ contract.insurance }}</td>
+            </tr>
+            <tr>
+                <th>Termination</th>
+                <td>{{ contract.termination }}</td>
+            </tr>
+            <tr>
+                <th>TerminationConsequences</th>
+                <td>{{ contract.terminationConsequences }}</td>
+            </tr>
+            <tr>
+                <th>PartialInvalidity</th>
+                <td>{{ contract.partialInvalidity }}</td>
+            </tr>
+            <tr>
+                <th>EntireAgreement</th>
+                <td>{{ contract.entireAgreement }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_contract_index') }}">back to list</a>
+
+    <a href="{{ path('app_contract_edit', {'id': contract.id}) }}">edit</a>
+
+    {{ include('contract/_delete_form.html.twig') }}
+{% endblock %}

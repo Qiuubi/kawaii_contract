@@ -2,12 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
-use App\Repository\BrandRepository;
+use App\Repository\StatusRepository;
 use App\Repository\CategoryRepository;
-use App\Repository\CompanyRepository;
 use App\Repository\ContractRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\AmendementRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,15 +14,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(ContractRepository $contractRepository): Response
+    public function index(ContractRepository $contractRepository, CategoryRepository $categoryRepository, StatusRepository $statusRepository, AmendementRepository $amendementRepository): Response
     {
+        $contractNames = $contractRepository->contractName();
+        $categoryNames = $categoryRepository->categoryName();
+        $statusNames = $statusRepository->statusName();
         $lastContracts = $contractRepository->showLastFiveContracts();
         $contractsInProgress = $contractRepository->showInProgressContracts();
-        $contractsSoonFinish = $contractRepository->allContractsAmendements();
+        $contractsSoonFinish = $contractRepository->findAll(); // v ça
+        $amendements = $amendementRepository->findAll();
+
         return $this->render('home/index.html.twig', [
+            'contractNames' => $contractNames,
+            'categoryNames' => $categoryNames,
+            'statusNames' => $statusNames,
             'lastContracts' => $lastContracts,
             'inProgressContracts' => $contractsInProgress,
-            'contractsSoonFinish' => $contractsSoonFinish
+            'contractsSoonFinish' => $contractsSoonFinish,
+            'amendements' => $amendements,
         ]);
     }
 

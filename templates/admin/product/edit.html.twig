@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le produit
+{% endblock %}
+
+{% block body %}
+	<h1 class="kawaii-contract-main-title dashboard">Modifier un produit</h1>
+
+	{{ include('admin/product/_form.html.twig', {'button_label': 'Update'}) }}
+
+	<a href="{{ path('product_list') }}">back to list</a>
+
+	{{ include('admin/product/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,27 @@
+{{ form_start(form) }}
+<section class="my-custom-class-for-errors">
+	{{ form_errors(form) }}
+</section>
+<section class="kawaii-contract-form add-product">
+	<section class="kawaii-contract-structure preambule add-product">
+		<section class="kawaii-contract-structure-container add-product">
+			<div class="kawaii-contract-structure-inputs add-product">
+				{{ form_label(form.name, "Nom du produit") }}
+				{{ form_widget(form.name) }}
+				{{ form_label(form.collection, "Collection") }}
+				{{ form_widget(form.collection) }}
+				{{ form_label(form.capacity, 'Capacité (en ml)') }}
+				{{ form_widget(form.capacity) }}
+				{{ form_label(form.price, 'Prix') }}
+				{{ form_widget(form.price) }}
+				{{ form_label(form.brand, 'Marque') }}
+				{{ form_widget(form.brand) }}
+				{{ form_label(form.img) }}
+				{{ form_widget(form.img) }}
+				<button class="button-submit add-product">{{ button_label|default('Ajouter') }}</button>
+				<a class="button-back add-category" href="{{ path('category_list') }}">Retour</a>
+			</div>
+		</section>
+	</section>
+</section>
+{{ form_end(form) }}

@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rechercher un contrat
+{% endblock %}
+{% block body %}
+
+	<div class="kawaii-contract-search-bar">
+		<form action="{{path('search')}}" class="kawaii-contract-search-form">
+			<ul>
+				<li class="kawaii-contract-search-li">
+					<label for="contract-name" class="">Par nom</label>
+					<select id="contract-name" class="" name="contract-name">
+						<option value="">- Nom du contrat -</option>
+						{% for contractName in contractNames %}
+							<option value="{{ contractName.name }}">{{ contractName.name }}</option>
+						{% endfor %}
+					</select>
+				</li>
+				<li class="kawaii-contract-search-li">
+					<label for="contract-category" class="">Par catégorie</label>
+					<select id="contract-category" class="" name="contract-category">
+						<option value="">- Catégorie -</option>
+						{% for category in categoryNames %}
+							<option value="{{ category.name }}">{{ category.name }}</option>
+						{% endfor %}
+					</select>
+				</li>
+				<li class="kawaii-contract-search-li">
+					<label for="contract-status" class="">Par statut</label>
+					<select id="contract-status" class="" name="contract-status">
+						<option value="">- Statut -</option>
+						{% for status in statusNames %}
+							<option value="{{ status.name }}">{{ status.name }}</option>
+						{% endfor %}
+					</select>
+				</li>
+				<li class="kawaii-contract-search-li">
+					<button type="submit" id="button-search" class="button-search">Chercher</button>
+				</li>
+			</ul>
+		</form>
+	</div>
+	<section class="kawaii-contract-body search">
+		{% if resultsByAll|length > 0 %}
+			<!-- V. Résultats recherche les conditions remplies -->
+			{{ include('search/_resultsByAll.html.twig') }}
+		{% elseif resultsByName|length > 0 %}
+			<!-- VI. Résultats recherche par nom -->
+			{{ include('search/_resultsByName.html.twig') }}
+		{% elseif resultsByCategory|length > 0 %}
+			<!-- VII. Résultats recherche par catégorie -->
+			{{ include('search/_resultsByCategory.html.twig') }}
+		{% elseif resultsByStatus|length > 0 %}
+			<!-- VIII. Résultats recherche par status -->
+			{{ include('search/_resultsByStatus.html.twig') }}
+		{% else %}
+			<section id="kawaii-contract-last-contrat" class="kawaii-contract-part search">
+				<h1 class="kawaii-contract-main-title search">Ha bien pour le moment, il n'y a rien...</h1><img class="kawaii-contract-no-results" src="https://c.tenor.com/WhF1rFFp5lAAAAAC/nothing-to-see-here.gif">
+			</section>
+		{% endif %}
+	</section>
+</section>
+<script>
+	toggle("svg[data-number-search]", "data-number-search", "button-search", "content-search");
+/*
+let submitButton = document.getElementById("button-search");
+let names = document.getElementById("contract-name");
+let categories = document.getElementById("contract-category");
+let statuses = document.getElementById("contract-status");
+console.log(names, categories, statuses);
+
+submitButton.addEventListener("click", function (e) {
+e.preventDefault();
+console.log(submitButton)
+let name = names.options[names.selectedIndex].value;
+let category = categories.options[categories.selectedIndex].value;
+let status = statuses.options[statuses.selectedIndex].value;
+console.log(name, category, status);
+fetch(`https://127.0.0.1:8000/search?contract-name=${name}&contract-category=${category}&contract-status=${status}`);
+})
+*/
+</script>{% endblock %}

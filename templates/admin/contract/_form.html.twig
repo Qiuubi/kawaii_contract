@@ -1,0 +1,146 @@
+{{ form_start(form) }}
+<section class="my-custom-class-for-errors">
+	{{ form_errors(form) }}
+</section>
+<section class="kawaii-contract-form add-contract">
+	<section class="kawaii-contract-structure preambule add-contract">
+		<h2 class="kawaii-contract-title-structure add-contract">Préambule</h2>
+		<section class="kawaii-contract-structure-container add-contract">
+			<div class="kawaii-contract-structure-inputs preambule add-contract">
+				{{ form_label(form.number, 'Numéro du contrat') }}
+				{{ form_widget(form.number) }}
+				{{ form_label(form.name, 'Nom du contrat') }}
+				{{ form_widget(form.name) }}
+				{{ form_label(form.category, 'Catégorie du contrat') }}
+				{{ form_widget(form.category) }}
+			</div>
+			<div class="kawaii-contract-structure-inputs preambule add-contract">
+				{{ form_label(form.ourCompany, 'Entreprise concernée') }}
+				{{ form_widget(form.ourCompany) }}
+				{{ form_label(form.ourCompanyQuality, "Qualité de l'entreprise") }}
+				{{ form_widget(form.ourCompanyQuality) }}
+				{{ form_label(form.product, "Produit(s) concerné(s)") }}
+				{{ form_widget(form.product) }}
+			</div>
+			<div class="kawaii-contract-structure-inputs preambule add-contract">
+				{{ form_label(form.partner, 'Nom du partenaire') }}
+				{{ form_widget(form.partner) }}
+				{{ form_label(form.partnerQuality, "Qualité du partenaire") }}
+				{{ form_widget(form.partnerQuality) }}
+			</div>
+			<div class="kawaii-contract-structure-inputs preambule add-contract">
+				{{ form_label(form.description, "Description") }}
+				{{ form_widget(form.description) }}
+			</div>
+		</section>
+		<div
+			class="kawaii-contract-indication"><!--
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				            <svg class="svg-icon" viewBox="0 0 20 20">
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																					        	<path d="M17.211,3.39H2.788c-0.22,0-0.4,0.18-0.4,0.4v9.614c0,0.221,0.181,0.402,0.4,0.402h3.206v2.402c0,0.363,0.429,0.533,0.683,0.285l2.72-2.688h7.814c0.221,0,0.401-0.182,0.401-0.402V3.79C17.612,3.569,17.432,3.39,17.211,3.39M16.811,13.004H9.232c-0.106,0-0.206,0.043-0.282,0.117L6.795,15.25v-1.846c0-0.219-0.18-0.4-0.401-0.4H3.189V4.19h13.622V13.004z"></path>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																					        </svg>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				         -->
+		</div>
+	</section>
+	<section class="kawaii-contract-structure fundamentals add-contract">
+		<h2 class="kawaii-contract-title-structure add-contract">Principes fondamentaux</h2>
+		<section class="kawaii-contract-structure-container add-contract">
+			<div class="kawaii-contract-structure-inputs fundamentals add-contract">
+				{{ form_label(form.user, "Qui gère le contrat ?") }}
+				{{ form_widget(form.user) }}
+				{{ form_label(form.language, 'Langue') }}
+				{{ form_widget(form.language) }}
+				{{ form_label(form.purpose, 'Objet') }}
+				{{ form_widget(form.purpose) }}
+				{{ form_label(form.territory, 'Territoire') }}
+				{{ form_widget(form.territory) }}
+			</div>
+			<div class="kawaii-contract-structure-inputs fundamentals add-contract">
+				{{ form_label(form.term, 'Durée du contrat') }}
+				{{ form_widget(form.term) }}
+				{{ form_label(form.dateEffect, 'Date de signature') }}
+				{{ form_widget(form.dateEffect) }}
+				{{ form_label(form.dateEnding, 'Date de fin') }}
+				{{ form_widget(form.dateEnding) }}
+				{{ form_label(form.status, "Statut") }}
+				{{ form_widget(form.status) }}
+			</div>
+		</section>
+	</section>
+	<section class="kawaii-contract-structure marketing add-contract">
+		<h2 class="kawaii-contract-title-structure add-contract">Marketing</h2>
+		<section class="kawaii-contract-structure-container add-contract">
+			<div class="kawaii-contract-structure-inputs marketing add-contract">
+				{{ form_label(form.registration, "Qui s'occupe des autorisations et enregistrements ?") }}
+				{{ form_widget(form.registration) }}
+				{{ form_label(form.marketingRate, 'Taux marketing') }}
+				{{ form_widget(form.marketingRate) }}
+				{{ form_label(form.reports, 'Fréquence des rapports') }}
+				{{ form_widget(form.reports) }}
+				{{ form_label(form.sellObjectives, 'Objectifs de vente') }}
+				{{ form_widget(form.sellObjectives) }}
+			</div>
+			<div class="kawaii-contract-structure-inputs marketing add-contract">
+				{{ form_label(form.stocks, "Stocks à prévoir avant expédition") }}
+				{{ form_widget(form.stocks) }}
+				{{ form_label(form.retentionPeriod, 'Durée maximale de stockage') }}
+				{{ form_widget(form.retentionPeriod) }}
+				{{ form_label(form.noCompetition, 'Non-concurrence') }}
+				{{ form_widget(form.noCompetition) }}
+				{{ form_label(form.sellInternet, 'Vente sur internet') }}
+				{{ form_widget(form.sellInternet) }}
+			</div>
+		</section>
+	</section>
+	<section class="kawaii-contract-structure logistic-payment add-contract">
+		<h2 class="kawaii-contract-title-structure add-contract">Logistique et paiement</h2>
+		<section class="kawaii-contract-structure-container add-contract">
+			<div class="kawaii-contract-structure-inputs logistic-payment add-contract">
+				{{ form_label(form.supplyOrders, "Commande à partir de quand ?") }}
+				{{ form_widget(form.supplyOrders) }}
+				{{ form_label(form.delivery, 'Expédition à partir de quand ?') }}
+				{{ form_widget(form.delivery) }}
+				{{ form_label(form.reception, 'Réception') }}
+				{{ form_widget(form.reception) }}
+				{{ form_label(form.retentionTitle, 'Réserve de propriété') }}
+				{{ form_widget(form.retentionTitle) }}
+			</div>
+			<div class="kawaii-contract-structure-inputs logistic-payment add-contract">
+				{{ form_label(form.price, 'Prix') }}
+				{{ form_widget(form.price) }}
+				{{ form_label(form.priceRevision, 'Révision de prix') }}
+				{{ form_widget(form.priceRevision) }}
+				{{ form_label(form.payment, "Paiement à partir de quand ?") }}
+				{{ form_widget(form.payment) }}
+			</div>
+		</section>
+	</section>
+	<section class="kawaii-contract-structure contractual-tech add-contract">
+		<h2 class="kawaii-contract-title-structure add-contract">Technique contractuelle</h2>
+		<section class="kawaii-contract-structure-container add-contract">
+			<div class="kawaii-contract-structure-inputs contractual-tech contractual-tech add-contract">
+				{{ form_label(form.penalties, "Pénalités") }}
+				{{ form_widget(form.penalties) }}
+				{{ form_label(form.liability, 'Responsabilité') }}
+				{{ form_widget(form.liability) }}
+				{{ form_label(form.insurance, 'Assurance') }}
+				{{ form_widget(form.insurance) }}
+				{{ form_label(form.termination, 'Résiliation') }}
+				{{ form_widget(form.termination) }}
+				{{ form_label(form.terminationConsequences, 'Conséquences résiliation') }}
+				{{ form_widget(form.terminationConsequences) }}
+			</div>
+			<div class="kawaii-contract-structure-inputs contractual-tech contractual-tech add-contract">
+				{{ form_label(form.partialInvalidity, "Nullité partielle") }}
+				{{ form_widget(form.partialInvalidity) }}
+				{{ form_label(form.entireAgreement, "Intégralité de l'accord") }}
+				{{ form_widget(form.entireAgreement) }}
+				{{ form_label(form.applicableLaw, 'Loi applicable') }}
+				{{ form_widget(form.applicableLaw) }}
+				{{ form_label(form.dispute, 'Clause attributive de juridiction') }}
+				{{ form_widget(form.dispute) }}
+				<button class="button-submit add-contract">{{ button_label|default('Ajouter') }}</button>
+				<a class="button-back add-contract" href="{{ path('admin') }}">Retour</a>
+			</div>
+		</section>
+	</section>
+	{{ form_end(form) }}

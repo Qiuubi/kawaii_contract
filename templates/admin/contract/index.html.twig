@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contract index
+{% endblock %}
+
+{% block body %}
+	<h1>Contract index</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Number</th>
+				<th>Name</th>
+				<th>OurCompanyQuality</th>
+				<th>PartnerQuality</th>
+				<th>Description</th>
+				<th>CreatedAt</th>
+				<th>Purpose</th>
+				<th>Territory</th>
+				<th>Term</th>
+				<th>DateEffect</th>
+				<th>DateEnding</th>
+				<th>Price</th>
+				<th>PriceRevision</th>
+				<th>ApplicableLaw</th>
+				<th>Dispute</th>
+				<th>Language</th>
+				<th>Registration</th>
+				<th>MarketingRate</th>
+				<th>Reports</th>
+				<th>SellObjectives</th>
+				<th>Stocks</th>
+				<th>RetentionPeriod</th>
+				<th>NoCompetition</th>
+				<th>SellInternet</th>
+				<th>SupplyOrders</th>
+				<th>Delivery</th>
+				<th>Reception</th>
+				<th>Payment</th>
+				<th>Penalties</th>
+				<th>RetentionTitle</th>
+				<th>Liability</th>
+				<th>Insurance</th>
+				<th>Termination</th>
+				<th>TerminationConsequences</th>
+				<th>PartialInvalidity</th>
+				<th>EntireAgreement</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for contract in contracts %}
+				<tr>
+					<td>{{ contract.id }}</td>
+					<td>{{ contract.number }}</td>
+					<td>{{ contract.name }}</td>
+					<td>{{ contract.ourCompanyQuality }}</td>
+					<td>{{ contract.partnerQuality }}</td>
+					<td>{{ contract.description }}</td>
+					<td>{{ contract.createdAt ? contract.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+					<td>{{ contract.purpose }}</td>
+					<td>{{ contract.territory }}</td>
+					<td>{{ contract.term }}</td>
+					<td>{{ contract.dateEffect ? contract.dateEffect|date('Y-m-d') : '' }}</td>
+					<td>{{ contract.dateEnding ? contract.dateEnding|date('Y-m-d') : '' }}</td>
+					<td>{{ contract.price }}</td>
+					<td>{{ contract.priceRevision }}</td>
+					<td>{{ contract.applicableLaw }}</td>
+					<td>{{ contract.dispute }}</td>
+					<td>{{ contract.language }}</td>
+					<td>{{ contract.registration }}</td>
+					<td>{{ contract.marketingRate }}</td>
+					<td>{{ contract.reports }}</td>
+					<td>{{ contract.sellObjectives }}</td>
+					<td>{{ contract.stocks }}</td>
+					<td>{{ contract.retentionPeriod }}</td>
+					<td>{{ contract.noCompetition }}</td>
+					<td>{{ contract.sellInternet }}</td>
+					<td>{{ contract.supplyOrders }}</td>
+					<td>{{ contract.delivery }}</td>
+					<td>{{ contract.reception }}</td>
+					<td>{{ contract.payment }}</td>
+					<td>{{ contract.penalties }}</td>
+					<td>{{ contract.retentionTitle }}</td>
+					<td>{{ contract.liability }}</td>
+					<td>{{ contract.insurance }}</td>
+					<td>{{ contract.termination }}</td>
+					<td>{{ contract.terminationConsequences }}</td>
+					<td>{{ contract.partialInvalidity }}</td>
+					<td>{{ contract.entireAgreement }}</td>
+					<td>
+						<a href="{{ path('contract_show', {'id': contract.id}) }}">show</a>
+						<a href="{{ path('contract_edit', {'id': contract.id}) }}">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="38">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a href="{{ path('contract_add') }}">Create new</a>
+{% endblock %}
