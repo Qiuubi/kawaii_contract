@@ -64,7 +64,7 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('admin/category/del/{id}', name: 'category_delete', methods: ['POST'])]
+    #[Route('admin/category/del/{id}', name: 'category_del', methods: ['POST'])]
     public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {

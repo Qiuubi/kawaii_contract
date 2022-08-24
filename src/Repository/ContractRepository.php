@@ -57,21 +57,25 @@ class ContractRepository extends ServiceEntityRepository
     public function showInProgressContracts()
     {
         return $this->createQueryBuilder('ctt')
-            ->where('ctt.status != 6')
+            ->where('ctt.status != 5')
             ->orderBy('ctt.dateEffect', 'ASC')
-            ->setMaxResults(5)
             ->getQuery()
             ->getResult();
     }
 
-    public function allContractsAmendements()
+    public function showContractFinishSoon()
     {
         return $this->createQueryBuilder('ctt')
-            ->addSelect('a')
-            ->from('App\Entity\Amendement', 'a')
-            ->leftJoin('a.contract', 'ON', 'ctt.id = a.contract')
-            // ->where('a.contract = ctt.id')
-            // SELECT * FROM contract AS ctt LEFT JOIN amendement AS a ON ctt.id = a.contract_id 
+            ->where('ctt.status != 5')
+            ->orderBy('ctt.dateEffect', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function allContracts()
+    {
+        return $this->createQueryBuilder('ctt')
+            ->orderBy('ctt.status', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -79,13 +83,11 @@ class ContractRepository extends ServiceEntityRepository
     public function contractName()
     {
         $entityManager = $this->getEntityManager();
-
         $query = $entityManager->createQuery(
             'SELECT ctt.name
             FROM App\Entity\Contract ctt
             ORDER BY ctt.name ASC'
         );
-
         return $query->getResult();
     }
 
@@ -139,6 +141,19 @@ class ContractRepository extends ServiceEntityRepository
             ->orderBy('ctt.name', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function contractNotifications()
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            "SELECT ctt.name, ctt.dateEffect, ctt.dateEnding
+            FROM App\Entity\Contract ctt
+            JOIN App\Entity\Amendement a
+            WHERE ctt.status = 2
+            ORDER BY ctt.name"
+        );
+        return $query->getResult();
     }
 
 

@@ -1,22 +1,46 @@
 <section id="kawaii-contract-search" class="kawaii-contract-part search">
 	<h1 class="kawaii-contract-main-title search">Résultats de vos recherches</h1>
 	{% for contract in resultsByAll %}
+		{% set dateEff = contract.dateEffect|date('d-m-Y') %}
+		{% set dateEnd = contract.dateEnding|date('d-m-Y') %}
+		{% set today = "now"|date('d-m-Y') %}
+		{% set initialTotalDays = date(dateEnd).diff(date(dateEff))%}
+		{% set dateEffectToday = date(today).diff(date(dateEff))%}
+		{% set initialPercent = dateEffectToday.days  * 100 / initialTotalDays.days %}
+		{% set daysbetweenTodayDateEnding = date(dateEnd).diff(date(today))%}
+		{% set contractId = contract.id %}
+		{% set totalTerm = 0 %}
 		<article class="kawaii-contract-first-block search">
 			<div class="kawaii-contract-first-block-container search">
 				<div class="kawaii-contract-category-color search">
-					<div class="kawaii-contract-category-color-inside search" style="background-color: {{contract.category.color}};"></div>
+					<div class="kawaii-contract-category-color-inside search" style="background-color: {{contract.category.color}};">
+						<p class="category-first-letter">{{contract.category.name|slice(0, 1)}}</p>
+					</div>
 				</div>
 				<svg id="button-search-{{contract.id}}" data-number-search="{{contract.id}}" class="svg-icon kawaii-contract-icon-down-arrow search" viewbox="0 0 20 20">
 					<path d="M13.962,8.885l-3.736,3.739c-0.086,0.086-0.201,0.13-0.314,0.13S9.686,12.71,9.6,12.624l-3.562-3.56C5.863,8.892,5.863,8.611,6.036,8.438c0.175-0.173,0.454-0.173,0.626,0l3.25,3.247l3.426-3.424c0.173-0.172,0.451-0.172,0.624,0C14.137,8.434,14.137,8.712,13.962,8.885 M18.406,10c0,4.644-3.763,8.406-8.406,8.406S1.594,14.644,1.594,10S5.356,1.594,10,1.594S18.406,5.356,18.406,10 M17.521,10c0-4.148-3.373-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.147,3.374,7.521,7.521,7.521C14.148,17.521,17.521,14.147,17.521,10"></path>
 				</svg>
-				<h2 class="kawaii-contract-first-block-name search">{{contract.name}}</h2>
+				{% if daysbetweenTodayDateEnding.days < 165 and contract.status.name != 'Fin' %}
+					<h2 class="kawaii-contract-first-block-name search" style="width:20%;">{{contract.name}}</h2>
+					<h3 class="notification in-progress" style="width:20%;">
+						Bientôt à son terme !
+						{% if is_granted('ROLE_ADMIN') %}
+							<a href="{{path('contract_edit', {id: contract.id})}}">
+								<svg class="svg-icon" viewbox="0 0 20 20">
+									<path d="M14.613,10c0,0.23-0.188,0.419-0.419,0.419H10.42v3.774c0,0.23-0.189,0.42-0.42,0.42s-0.419-0.189-0.419-0.42v-3.774H5.806c-0.23,0-0.419-0.189-0.419-0.419s0.189-0.419,0.419-0.419h3.775V5.806c0-0.23,0.189-0.419,0.419-0.419s0.42,0.189,0.42,0.419v3.775h3.774C14.425,9.581,14.613,9.77,14.613,10 M17.969,10c0,4.401-3.567,7.969-7.969,7.969c-4.402,0-7.969-3.567-7.969-7.969c0-4.402,3.567-7.969,7.969-7.969C14.401,2.031,17.969,5.598,17.969,10 M17.13,10c0-3.932-3.198-7.13-7.13-7.13S2.87,6.068,2.87,10c0,3.933,3.198,7.13,7.13,7.13S17.13,13.933,17.13,10"></path>
+								</svg>
+							</a>
+						{% endif %}
+					</h3>
+				{% else %}
+					<h2 class="kawaii-contract-first-block-name search" style="width:40%;">{{contract.name}}</h2>
+				{% endif %}
 				<div class="kawaii-contract-first-block-progress-bar search">
-					{% set dateEff = contract.dateEffect|date('d-m-Y') %}
-					{% set dateEnd = contract.dateEnding|date('d-m-Y') %}
-					{% set today = "now"|date('d-m-Y') %}
-					{% set initialTotalDays = date(dateEnd).diff(date(dateEff))%}
-					{% set dateEffectToday = date(today).diff(date(dateEff))%}
-					{% set initialPercent = dateEffectToday.days  * 100 / initialTotalDays.days %}<div class="kawaii-contract-progress-bar-inside search" style="width: {{ initialPercent }}%; max-width: 100%; {% if contract.status.name == 'Renouvelé' %}{% endif %}"></div>
+					<div class="kawaii-contract-progress-bar-inside search" style="width: {{ initialPercent }}%; max-width: 100%; {% if contract.status.name == 'Renouvelé' %}background-color: #CC7A7A;{% elseif contract.status.name == 'Fin' %}background-color: #824E4E;{% else %}{% endif %}">
+						{% if initialPercent > 10 %}
+							<p class="status-name">{{contract.status.name}}</p>
+						{% endif %}
+					</div>
 				</div>
 			</div>
 		</article>
@@ -96,6 +120,41 @@
 								</svg>
 								<!-- 60 Jours après émission/réception de la facture -->
 								{{contract.payment}}</li>
+							{% if amendements is defined %}
+								<li class="kawaii-contract-provision amendement-lists search">
+									{% set sumTerm = 0 %}
+									{% for amendement in amendements %}
+										{% set amDateEffect = amendement.dateEffect|date('d-m-Y') %}
+										{% set amDateEnding = amendement.dateEnding|date('d-m-Y') %}
+										{% set today = "now"|date('d-m-Y') %}
+										{% set amTotalDays = date(amDateEnding).diff(date(amDateEffect))%}
+										{% set amDateEffectToday = date(today).diff(date(amDateEffect))%}
+										{% set amPercent = amDateEffectToday.days  * 100 / amTotalDays.days %}
+										{% if amendement.contract.id == contractId %}
+											{% set sumTerm = sumTerm + amendement.term %}
+											<div id="kawaii-contract-amendement-{{amendement.contract.id}}" class="kawaii-contract-amendement-block search">
+												<svg class="svg-icon" viewbox="0 0 20 20">
+													<path d="M15.396,2.292H4.604c-0.212,0-0.385,0.174-0.385,0.386v14.646c0,0.212,0.173,0.385,0.385,0.385h10.792c0.211,0,0.385-0.173,0.385-0.385V2.677C15.781,2.465,15.607,2.292,15.396,2.292 M15.01,16.938H4.99v-2.698h1.609c0.156,0.449,0.586,0.771,1.089,0.771c0.638,0,1.156-0.519,1.156-1.156s-0.519-1.156-1.156-1.156c-0.503,0-0.933,0.321-1.089,0.771H4.99v-3.083h1.609c0.156,0.449,0.586,0.771,1.089,0.771c0.638,0,1.156-0.518,1.156-1.156c0-0.638-0.519-1.156-1.156-1.156c-0.503,0-0.933,0.322-1.089,0.771H4.99V6.531h1.609C6.755,6.98,7.185,7.302,7.688,7.302c0.638,0,1.156-0.519,1.156-1.156c0-0.638-0.519-1.156-1.156-1.156c-0.503,0-0.933,0.322-1.089,0.771H4.99V3.062h10.02V16.938z M7.302,13.854c0-0.212,0.173-0.386,0.385-0.386s0.385,0.174,0.385,0.386s-0.173,0.385-0.385,0.385S7.302,14.066,7.302,13.854 M7.302,10c0-0.212,0.173-0.385,0.385-0.385S8.073,9.788,8.073,10s-0.173,0.385-0.385,0.385S7.302,10.212,7.302,10 M7.302,6.146c0-0.212,0.173-0.386,0.385-0.386s0.385,0.174,0.385,0.386S7.899,6.531,7.688,6.531S7.302,6.358,7.302,6.146"></path>
+												</svg>
+												<p class="kawaii-contract-amendement-date">Du
+													{{amendement.dateEffect.format('d/m/Y')}}
+												</p>
+												<p class="kawaii-contract-amendement-date">{{amendement.dateEnding.format('d/m/Y')}}
+												</p>
+												<p class="kawaii-contract-amendement-date">
+													{{amendement.term}}
+													ans</p>
+												<div class="kawaii-contract-amendement-bar-progress" style="width: {{ amPercent }}%; max-width: 100%;"></div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								</li>
+								<li class="kawaii-contract-provision total-term search">Durée totale :
+									{% set totalTerm = sumTerm + contract.term %}
+									{{ totalTerm }}
+									ans
+								</li>
+							{% endif %}
 						</ul>
 					</div>
 					<div class="kawaii-contract-details-part-list search">
@@ -264,8 +323,6 @@
 								<!-- reception à tel jours après la commande -->
 								{{contract.reception}}
 							</li>
-							{% set contractId = contract.id %}
-							{% set totalTerm = 0 %}
 							{% if amendements is defined %}
 								<li class="kawaii-contract-provision amendement-lists search">
 									{% set sumTerm = 0 %}

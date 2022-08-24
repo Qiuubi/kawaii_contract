@@ -21,8 +21,10 @@ class HomeController extends AbstractController
         $statusNames = $statusRepository->statusName();
         $lastContracts = $contractRepository->showLastFiveContracts();
         $contractsInProgress = $contractRepository->showInProgressContracts();
-        $contractsSoonFinish = $contractRepository->findAll(); // v ça
+        $contractsSoonFinish = $contractRepository->showContractFinishSoon();
         $amendements = $amendementRepository->findAll();
+        $contractNotifications = $contractRepository->contractNotifications();
+        // dd($notifications);
 
         return $this->render('home/index.html.twig', [
             'contractNames' => $contractNames,
@@ -32,15 +34,18 @@ class HomeController extends AbstractController
             'inProgressContracts' => $contractsInProgress,
             'contractsSoonFinish' => $contractsSoonFinish,
             'amendements' => $amendements,
+            'contractNotifications' => $contractNotifications
         ]);
     }
 
     #[Route('/contracts', name: 'contracts')]
-    public function allContracts(ContractRepository $contractRepository): Response
+    public function allContracts(ContractRepository $contractRepository, AmendementRepository $amendementRepository): Response
     {
-        $allContracts = $contractRepository->findAll();
+        $amendements = $amendementRepository->findAll();
+        $allContracts = $contractRepository->allContracts();
         return $this->render('home/contracts.html.twig', [
-            'allContracts' => $allContracts
+            'allContracts' => $allContracts,
+            'amendements' => $amendements,
         ]);
     }
 }
