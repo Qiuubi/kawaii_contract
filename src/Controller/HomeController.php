@@ -21,7 +21,7 @@ class HomeController extends AbstractController
         $statusNames = $statusRepository->statusName();
         $lastContracts = $contractRepository->showLastFiveContracts();
         $contractsInProgress = $contractRepository->showInProgressContracts();
-        $contractsSoonFinish = $contractRepository->showContractFinishSoon();
+        // $contractsSoonFinish = $contractRepository->showContractFinishSoon();
         $amendements = $amendementRepository->findAll();
         $contractNotifications = $contractRepository->contractNotifications();
         // dd($notifications);
@@ -32,7 +32,7 @@ class HomeController extends AbstractController
             'statusNames' => $statusNames,
             'lastContracts' => $lastContracts,
             'inProgressContracts' => $contractsInProgress,
-            'contractsSoonFinish' => $contractsSoonFinish,
+            // 'contractsSoonFinish' => $contractsSoonFinish,
             'amendements' => $amendements,
             'contractNotifications' => $contractNotifications
         ]);

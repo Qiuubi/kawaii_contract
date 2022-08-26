@@ -15,6 +15,8 @@ class AdminController extends AbstractController
     {
         $amendements = $amendementRepository->findAll();
         $contracts = $contractRepository->findAll();
+        // $c = $contractRepository->contractDashboard();
+        // dd($c);
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'AdminController',
             'contracts' => $contracts,

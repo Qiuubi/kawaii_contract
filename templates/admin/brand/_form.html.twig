@@ -4,10 +4,9 @@
 </section>
 <section class="kawaii-contract-form add-brand">
 	<section class="kawaii-contract-structure preambule add-brand">
-		<h2 class="kawaii-contract-title-structure add-brand">Préambule</h2>
 		<section class="kawaii-contract-structure-container add-brand">
 			<div class="kawaii-contract-structure-inputs add-brand">
-				{{ form_label(form.name, 'Nom de la catégorie') }}
+				{{ form_label(form.name, 'Nom de la marque') }}
 				{{ form_widget(form.name) }}
 				{{ form_label(form.company, 'Entreprise') }}
 				{{ form_widget(form.company) }}
@@ -15,6 +14,7 @@
 				{{ form_widget(form.description) }}
 				<button class="button-submit add-brand">{{ button_label|default('Ajouter') }}</button>
 				<a class="button-back add-category" href="{{ path('admin') }}">Retour</a>
+				<a class="button-back add-category" href="{{ path('brand_list') }}">Liste des marques</a>
 			</div>
 		</section>
 	</section>

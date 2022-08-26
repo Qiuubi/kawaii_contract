@@ -22,7 +22,7 @@ class BrandController extends AbstractController
     }
 
     #[Route('admin/brand/add', name: 'brand_add', methods: ['GET', 'POST'])]
-    public function new(Request $request, BrandRepository $brandRepository): Response
+    public function add(Request $request, BrandRepository $brandRepository): Response
     {
         $brand = new Brand();
         $form = $this->createForm(BrandType::class, $brand);

@@ -1,14 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Brand
+{% block title %}Modifier une marque
 {% endblock %}
 
 {% block body %}
-	<h1>Edit Brand</h1>
+	<h1 class="kawaii-contract-main-title brand dashboard">Modifier une marque</h1>
 
-	{{ include('admin/brand/_form.html.twig', {'button_label': 'Update'}) }}
-
-	<a href="{{ path('brand_list') }}">back to list</a>
-
-	{{ include('admin/brand/_delete_form.html.twig') }}
+	{{ include('admin/brand/_form.html.twig', {'button_label': 'Modifier'}) }}
 {% endblock %}

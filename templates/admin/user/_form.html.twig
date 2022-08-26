@@ -1,0 +1,23 @@
+{{ form_start(form) }}
+<section class="my-custom-class-for-errors">
+	{{ form_errors(form) }}
+</section>
+<section class="kawaii-contract-form add-user">
+	<section class="kawaii-contract-structure preambule add-user">
+		<section class="kawaii-contract-structure-container add-user">
+			<div class="kawaii-contract-structure-inputs add-user">
+				{{ form_label(form.firstname, "Prénom") }}
+				{{ form_widget(form.firstname) }}
+				{{ form_label(form.lastname, "Nom") }}
+				{{ form_widget(form.lastname) }}
+				{{ form_label(form.email, 'Adresse mail') }}
+				{{ form_widget(form.email) }}
+				{{ form_label(form.password, 'Mot de passe') }}
+				{{ form_widget(form.password) }}
+				<button class="button-submit add-user">{{ button_label|default('Ajouter') }}</button>
+				<a class="button-back add-user" href="{{ path('admin') }}">Retour</a>
+			</div>
+		</section>
+	</section>
+</section>
+{{ form_end(form) }}

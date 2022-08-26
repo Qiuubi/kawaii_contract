@@ -5,50 +5,55 @@
 
 {% block body %}
 	<section class="kawaii-contract-body dashboard">
-		<section class="kawaii-contract-lists">
-			<h1 class="kawaii-contract-main-title dashboard">Listes</h1>
-			<ul>
-				<li class="kawaii-contract-list">
-					<a href="{{path('category_list')}}">Catégories</a>
-				</li>
-				<li class="kawaii-contract-list">
-					<a href="{{path('company_list')}}">Entreprises - partenaires</a>
-				</li>
-				<li class="kawaii-contract-list">
-					<a href="{{path('brand_list')}}">Marques</a>
-				</li>
-				<li class="kawaii-contract-list">
-					<a href="{{path('product_list')}}">Produits</a>
-				</li>
-				<li class="kawaii-contract-list">
-					<a href="{#{path('home')}#}">Utilisateurs</a>
-				</li>
-			</ul>
-		</section>
-		<section class="kawaii-contract-fast-add">
-			<h1 class="kawaii-contract-main-title dashboard">Ajout rapide</h1>
-			<ul>
-				<li class="kawaii-contract-fast-add-li">
-					<a href="{{path('contract_add')}}">Ajouter un contrat</a>
-				</li>
-				<li class="kawaii-contract-fast-add-li">
-					<a href="{{path('category_add')}}">Ajouter une catégorie de contrat</a>
-				</li>
-				<li class="kawaii-contract-fast-add-li">
-					<a href="{{path('company_add')}}">Ajouter une société</a>
-				</li>
-				<li class="kawaii-contract-fast-add-li">
-					<a href="{{path('brand_add')}}">Ajouter une marque</a>
-				</li>
-				<li class="kawaii-contract-fast-add-li">
-					<a href="{{path('product_add')}}">Ajouter un produit</a>
-				</li>
-			</ul>
+		<section class="kawaii-contract-part dashboard">
+			<section class="kawaii-contract-lists">
+				<h1 class="kawaii-contract-main-title dashboard">Listes</h1>
+				<ul>
+					<li class="kawaii-contract-list">
+						<a href="{{path('category_list')}}">Catégories</a>
+					</li>
+					<li class="kawaii-contract-list">
+						<a href="{{path('company_list')}}">Entreprises - partenaires</a>
+					</li>
+					<li class="kawaii-contract-list">
+						<a href="{{path('brand_list')}}">Marques</a>
+					</li>
+					<li class="kawaii-contract-list">
+						<a href="{{path('product_list')}}">Produits</a>
+					</li>
+					<li class="kawaii-contract-list">
+						<a href="{{path('user_list')}}">Utilisateurs</a>
+					</li>
+				</ul>
+			</section>
+			<section class="kawaii-contract-fast-add">
+				<h1 class="kawaii-contract-main-title dashboard">Ajout rapide</h1>
+				<ul>
+					<li class="kawaii-contract-fast-add-li">
+						<a href="{{path('contract_add')}}">Ajouter un contrat</a>
+					</li>
+					<li class="kawaii-contract-fast-add-li">
+						<a href="{{path('category_add')}}">Ajouter une catégorie de contrat</a>
+					</li>
+					<li class="kawaii-contract-fast-add-li">
+						<a href="{{path('company_add')}}">Ajouter une société</a>
+					</li>
+					<li class="kawaii-contract-fast-add-li">
+						<a href="{{path('brand_add')}}">Ajouter une marque</a>
+					</li>
+					<li class="kawaii-contract-fast-add-li">
+						<a href="{{path('product_add')}}">Ajouter un produit</a>
+					</li>
+					<li class="kawaii-contract-fast-add-li">
+						<a href="{{path('user_add')}}">Ajouter un utilisateur</a>
+					</li>
+				</ul>
+			</section>
 		</section>
 		<section id="kawaii-contract-dashboard" class="kawaii-contract-part dashboard">
 			<h1 class="kawaii-contract-main-title dashboard">Tous les contrats</h1>
 			{% for contract in contracts %}
-				<article id="content-dashboard-{{contract.id}}" class="kawaii-contract-details-block dashboard" {#{ style="display:none;"} #}>
+				<article id="content-dashboard-{{contract.id}}" class="kawaii-contract-details-block dashboard">
 					<article class="kawaii-contract-details-circle-container dashboard">
 						<article class="kawaii-contract-details-circle dashboard">
 							<div class="kawaii-contract-status-circle dashboard" style="background-color: {{contract.status.color}};">
@@ -73,6 +78,10 @@
 						<span class="ourcompany-contract dashboard">{{contract.ourCompany}}
 						</span>
 						<span class="partner-contract dashboard">{{contract.partner}}
+						</span>
+						<span class="category-contract dashboard">{{contract.category.name}}
+						</span>
+						<span class="status-contract dashboard">{{contract.status.name}}
 						</span>
 					</article>
 					{% if contract.category.name != 'Distribution' %}

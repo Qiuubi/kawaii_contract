@@ -15,7 +15,6 @@
 				{{ form_label(form.legalRepresentative, 'Représentant légal') }}
 				{{ form_widget(form.legalRepresentative) }}
 				<button class="button-submit add-company">{{ button_label|default('Ajouter') }}</button>
-
 			</div>
 			<div class="kawaii-contract-structure-inputs add-company">
 				{{ form_label(form.address, 'Siège social') }}
@@ -27,6 +26,7 @@
 				{{ form_label(form.country, 'Pays') }}
 				{{ form_widget(form.country) }}
 				<a class="button-back add-company" href="{{ path('admin') }}">Retour</a>
+				<a class="button-back add-company" href="{{ path('company_list') }}">Liste des entreprises</a>
 			</div>
 		</section>
 	</section>

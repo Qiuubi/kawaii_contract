@@ -1,4 +1,32 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<section class="kawaii-contract-form add-amendement">
+	{{ form_start(form) }}
+	<section class="my-custom-class-for-errors">
+		{{ form_errors(form) }}
+	</section>
+	<section class="kawaii-contract-structure preambule add-amendement">
+		<h2 class="kawaii-contract-title-structure add-amendement">Préambule</h2>
+		<section class="kawaii-contract-structure-container add-amendement">
+			<div class="kawaii-contract-structure-inputs preambule add-amendement">
+				{{ form_label(form.name, "Nom de l'avenant") }}
+				{{ form_widget(form.name) }}
+				{{ form_label(form.term, 'Durée du contrat') }}
+				{{ form_widget(form.term) }}
+				{{ form_label(form.dateEffect, 'Date de signature') }}
+				{{ form_widget(form.dateEffect) }}
+				{{ form_label(form.dateEnding, 'Date de fin') }}
+				{{ form_widget(form.dateEnding) }}
+				{{ form_label(form.contract, "Contrat") }}
+				{{ form_widget(form.contract) }}
+			</div>
+			<div class="kawaii-contract-structure-inputs preambule add-amendement">
+				{{ form_label(form.description, "Description") }}
+				{{ form_widget(form.description) }}
+				{{ form_label(form.newProvisions, "Nouvelles dispositions") }}
+				{{ form_widget(form.newProvisions) }}
+				<button class="button-submit add-brand">{{ button_label|default('Ajouter') }}</button>
+				<a class="button-back dashboard" href="{{ path('admin') }}">Retour</a>
+			</div>
+		</section>
+	</section>
+	{{ form_end(form) }}
+</section>

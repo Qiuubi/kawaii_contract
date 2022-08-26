@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des marques
+{% block title %}User index
 {% endblock %}
 
 {% block body %}
-	<h1 class="kawaii-contract-main-title brand dashboard">Marques</h1>
-	<section class="kawaii-contract-show brand">
-		{% for brand in brands %}
-			<article class="kawaii-contract-show-block brand">
+	<h1 class="kawaii-contract-main-title companies dashboard">Utilisateurs</h1>
+	<section class="kawaii-contract-show companies">
+		{% for user in users %}
+			<article class="kawaii-contract-show-block companies">
 				<svg class="svg-icon" viewbox="0 0 20 20">
-					<path d="M17.283,5.549h-5.26V4.335c0-0.222-0.183-0.404-0.404-0.404H8.381c-0.222,0-0.404,0.182-0.404,0.404v1.214h-5.26c-0.223,0-0.405,0.182-0.405,0.405v9.71c0,0.223,0.182,0.405,0.405,0.405h14.566c0.223,0,0.404-0.183,0.404-0.405v-9.71C17.688,5.731,17.506,5.549,17.283,5.549 M8.786,4.74h2.428v0.809H8.786V4.74z M16.879,15.26H3.122v-4.046h5.665v1.201c0,0.223,0.182,0.404,0.405,0.404h1.618c0.222,0,0.405-0.182,0.405-0.404v-1.201h5.665V15.26z M9.595,9.583h0.81v2.428h-0.81V9.583zM16.879,10.405h-5.665V9.19c0-0.222-0.183-0.405-0.405-0.405H9.191c-0.223,0-0.405,0.183-0.405,0.405v1.215H3.122V6.358h13.757V10.405z"></path>
+					<path fill="none" d="M10,10.9c2.373,0,4.303-1.932,4.303-4.306c0-2.372-1.93-4.302-4.303-4.302S5.696,4.223,5.696,6.594C5.696,8.969,7.627,10.9,10,10.9z M10,3.331c1.801,0,3.266,1.463,3.266,3.263c0,1.802-1.465,3.267-3.266,3.267c-1.8,0-3.265-1.465-3.265-3.267C6.735,4.794,8.2,3.331,10,3.331z"></path>
+					<path fill="none" d="M10,12.503c-4.418,0-7.878,2.058-7.878,4.685c0,0.288,0.231,0.52,0.52,0.52c0.287,0,0.519-0.231,0.519-0.52c0-1.976,3.132-3.646,6.84-3.646c3.707,0,6.838,1.671,6.838,3.646c0,0.288,0.234,0.52,0.521,0.52s0.52-0.231,0.52-0.52C17.879,14.561,14.418,12.503,10,12.503z"></path>
 				</svg>
-				<p class="show-block-name">{{ brand.name }}</p>
-				<p class="show-block-company">de
-					{{ brand.company.name }}</p>
-				<a class="show-block-link" href="{{ path('brand_show', {'id': brand.id}) }}">
+				<p class="show-block-name">{{ user.firstname }}</p>
+				<p class="show-block-name">{{ user.lastname }}</p>
+				<a class="show-block-link" href="{{ path('user_show', {'id': user.id}) }}">
 					<svg class="svg-icon" viewbox="0 0 20 20">
 						<path fill="none" d="M17.222,5.041l-4.443-4.414c-0.152-0.151-0.356-0.235-0.571-0.235h-8.86c-0.444,0-0.807,0.361-0.807,0.808v17.602c0,0.448,0.363,0.808,0.807,0.808h13.303c0.448,0,0.808-0.36,0.808-0.808V5.615C17.459,5.399,17.373,5.192,17.222,5.041zM15.843,17.993H4.157V2.007h7.72l3.966,3.942V17.993z"></path>
 						<path fill="none" d="M5.112,7.3c0,0.446,0.363,0.808,0.808,0.808h8.077c0.445,0,0.808-0.361,0.808-0.808c0-0.447-0.363-0.808-0.808-0.808H5.92C5.475,6.492,5.112,6.853,5.112,7.3z"></path>
@@ -24,7 +24,7 @@
 						<path fill="none" d="M13.997,14.67H5.92c-0.444,0-0.808,0.361-0.808,0.808c0,0.447,0.363,0.808,0.808,0.808h8.077c0.445,0,0.808-0.361,0.808-0.808C14.805,15.032,14.442,14.67,13.997,14.67z"></path>
 					</svg>
 				</a>
-				<a class="show-block-link" href="{{ path('brand_edit', {'id': brand.id}) }}">
+				<a class="show-block-link" href="{{ path('user_edit', {'id': user.id}) }}">
 					<svg class="svg-icon" viewbox="0 0 20 20">
 						<path fill="none" d="M19.404,6.65l-5.998-5.996c-0.292-0.292-0.765-0.292-1.056,0l-2.22,2.22l-8.311,8.313l-0.003,0.001v0.003l-0.161,0.161c-0.114,0.112-0.187,0.258-0.21,0.417l-1.059,7.051c-0.035,0.233,0.044,0.47,0.21,0.639c0.143,0.14,0.333,0.219,0.528,0.219c0.038,0,0.073-0.003,0.111-0.009l7.054-1.055c0.158-0.025,0.306-0.098,0.417-0.211l8.478-8.476l2.22-2.22C19.695,7.414,19.695,6.941,19.404,6.65z M8.341,16.656l-0.989-0.99l7.258-7.258l0.989,0.99L8.341,16.656z M2.332,15.919l0.411-2.748l4.143,4.143l-2.748,0.41L2.332,15.919z M13.554,7.351L6.296,14.61l-0.849-0.848l7.259-7.258l0.423,0.424L13.554,7.351zM10.658,4.457l0.992,0.99l-7.259,7.258L3.4,11.715L10.658,4.457z M16.656,8.342l-1.517-1.517V6.823h-0.003l-0.951-0.951l-2.471-2.471l1.164-1.164l4.942,4.94L16.656,8.342z"></path>
 					</svg>
@@ -32,6 +32,5 @@
 			</article>
 		{% endfor %}
 	</section>
-	<a class="button-submit dashboard brand" href="{{ path('brand_add') }}">Ajouter une marque</a>
-	<a class="button-back dashboard brand" href="{{ path('admin') }}">Retour</a>
+	<a class="button-submit dashboard category" href="{{ path('user_add') }}">Ajouter un utilisateur</a>
 {% endblock %}

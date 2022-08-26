@@ -24,7 +24,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('admin/product/add', name: 'product_add', methods: ['GET', 'POST'])]
-    public function new(Request $request, ProductRepository $productRepository, SluggerInterface $slugger): Response
+    public function add(Request $request, ProductRepository $productRepository, SluggerInterface $slugger): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);

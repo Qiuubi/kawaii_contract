@@ -1,14 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Amendement
+{% block title %}Modifier Avenant
 {% endblock %}
 
 {% block body %}
-	<h1>Edit Amendement</h1>
+	<h1 class="kawaii-contract-main-title amendement dashboard">Modifier un avenant</h1>
 
-	{{ include('amendement/_form.html.twig', {'button_label': 'Update'}) }}
-
-	<a href="{{ path('amendement_list') }}">back to list</a>
-
-	{{ include('amendement/_delete_form.html.twig') }}
+	{{ include('admin/amendement/_form.html.twig', {'button_label': 'Modifier'}) }}
 {% endblock %}

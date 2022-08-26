@@ -3,9 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Amendement;
+use App\Entity\Contract;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class AmendementType extends AbstractType
 {
@@ -15,12 +18,17 @@ class AmendementType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('term')
-            ->add('dateEffect')
-            ->add('dateEnding')
-            ->add('createdAt')
+            ->add('dateEffect', DateType::class, [
+                'format' => 'dd-MM-yyyy'
+            ])
+            ->add('dateEnding', DateType::class, [
+                'format' => 'dd-MM-yyyy'
+            ])
             ->add('newProvisions')
-            ->add('contract')
-        ;
+            ->add('contract', EntityType::class, [
+                'class' => Contract::class,
+                'choice_label' => 'name'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

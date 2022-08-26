@@ -25,7 +25,7 @@ class ContractController extends AbstractController
     */
 
     #[Route('admin/contract/add', name: 'contract_add', methods: ['GET', 'POST'])]
-    public function new(Request $request, ContractRepository $contractRepository): Response
+    public function add(Request $request, ContractRepository $contractRepository): Response
     {
         $contract = new Contract();
         $form = $this->createForm(ContractType::class, $contract);

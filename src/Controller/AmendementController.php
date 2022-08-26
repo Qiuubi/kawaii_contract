@@ -24,13 +24,14 @@ class AmendementController extends AbstractController
     */
 
     #[Route('admin/amendement/add{id}', name: 'amendement_add', methods: ['GET', 'POST'])]
-    public function new(Request $request, AmendementRepository $amendementRepository): Response
+    public function add(Request $request, AmendementRepository $amendementRepository): Response
     {
         $amendement = new Amendement();
         $form = $this->createForm(AmendementType::class, $amendement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $amendement->setCreatedAt(new \DateTimeImmutable('now'));
             $amendementRepository->add($amendement);
             return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
         }

@@ -63,21 +63,27 @@ class ContractRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function showContractFinishSoon()
-    {
-        return $this->createQueryBuilder('ctt')
-            ->where('ctt.status != 5')
-            ->orderBy('ctt.dateEffect', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
     public function allContracts()
     {
         return $this->createQueryBuilder('ctt')
             ->orderBy('ctt.status', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function contractDashboard()
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            "SELECT b.name, p.name
+            FROM App\Entity\Contract ctt
+            JOIN App\Entity\Amendement a
+            JOIN App\Entity\Company com
+            JOIN App\Entity\Brand b
+            JOIN App\Entity\Product p
+            ORDER BY ctt.name"
+        );
+        return $query->getResult();
     }
 
     public function contractName()
@@ -123,8 +129,6 @@ class ContractRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-    // tester 
 
     public function searchAllConditions($names = null, $category = null, $status = null, $products = null)
     {
