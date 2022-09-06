@@ -4,11 +4,6 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Modifier un utilisateur</h1>
-
+	<h1 class="kawaii-contract-main-title user dashboard">Modifier un utilisateur</h1>
 	{{ include('admin/user/_form.html.twig', {'button_label': 'Modifier'}) }}
-
-	<a href="{{ path('user_list') }}">back to list</a>
-
-	{{ include('admin/user/_delete_form.html.twig') }}
 {% endblock %}

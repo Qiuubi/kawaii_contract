@@ -23,7 +23,7 @@ class AmendementController extends AbstractController
     }
     */
 
-    #[Route('admin/amendement/add{id}', name: 'amendement_add', methods: ['GET', 'POST'])]
+    #[Route('admin/amendement/add', name: 'amendement_add', methods: ['GET', 'POST'])]
     public function add(Request $request, AmendementRepository $amendementRepository): Response
     {
         $amendement = new Amendement();

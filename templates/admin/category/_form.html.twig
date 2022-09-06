@@ -4,7 +4,6 @@
 </section>
 <section class="kawaii-contract-form add-category">
 	<section class="kawaii-contract-structure preambule add-category">
-		<h2 class="kawaii-contract-title-structure add-category">Préambule</h2>
 		<section class="kawaii-contract-structure-container add-category">
 			<div class="kawaii-contract-structure-inputs add-category">
 				{{ form_label(form.name, 'Nom de la catégorie') }}
@@ -15,6 +14,7 @@
 				{{ form_widget(form.description) }}
 				<button class="button-submit add-category">{{ button_label|default('Ajouter') }}</button>
 				<a class="button-back add-category" href="{{ path('admin') }}">Retour</a>
+				<a class="button-back add-category" href="{{ path('category_del', {id: category.id}) }}">Supprimer</a>
 			</div>
 		</section>
 	</section>

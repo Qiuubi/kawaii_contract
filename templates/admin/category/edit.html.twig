@@ -1,14 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Category
+{% block title %}Modifier la catégorie
 {% endblock %}
 
 {% block body %}
-	<h1>Edit Category</h1>
+	<h1 class="kawaii-contract-main-title dashboard">Editer la catégorie de contrat</h1>
 
-	{{ include('admin/category/_form.html.twig', {'button_label': 'Update'}) }}
-
-	<a href="{{ path('category_list') }}">back to list</a>
-
-	{{ include('admin/category/_delete_form.html.twig') }}
+	{{ include('admin/category/_form.html.twig', {'button_label': 'Modifier'}) }}
 {% endblock %}

@@ -13,10 +13,8 @@ use App\Entity\Contract;
 use App\Entity\ProductDetail;
 use App\Entity\Status;
 use Bluemmb\Faker\PicsumPhotosProvider;
-use DateTime;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture

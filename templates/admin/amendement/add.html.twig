@@ -4,9 +4,8 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Create new Amendement</h1>
+	<h1 class="kawaii-contract-main-title amendement dashboard">Créer un avenant</h1>
 
-	{{ include('amendement/_form.html.twig') }}
+	{{ include('admin/amendement/_form.html.twig') }}
 
-	<a href="{{ path('amendement_list') }}">back to list</a>
 {% endblock %}

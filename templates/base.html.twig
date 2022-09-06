@@ -63,7 +63,8 @@
 			.kawaii-contract-amendement-block.soon-finish:hover,
 			.kawaii-contract-amendement-block.all-contracts:hover,
 			.kawaii-contract-amendement-block.search:hover,
-			.kawaii-contract-amendement-block.dashboard:hover {
+			.kawaii-contract-amendement-block.dashboard:hover,
+			.kawaii-contract-structure-inputs.login > input {
 				background-color: #FFFFFF;
 			}
 
@@ -182,7 +183,8 @@
 			}
 
 			.kawaii-contract-body.home,
-			.kawaii-contract-section-logo.home {
+			.kawaii-contract-section-logo.home,
+			.kawaii-contract-structure.preambule.login {
 				background-color: #FEECFE;
 			}
 
@@ -236,6 +238,37 @@
 				border: 5px solid #00ADAD;
 			}
 
+			.statistic-category-distribution {
+				color: #ffccff;
+			}
+
+			.statistic-category-partnership {
+				color: #CCFFFF;
+			}
+
+			.statistic-category-selling {
+				color: #FFE6CC;
+			}
+
+			.statistic-category-confidentiality {
+				color: #CCCCFF;
+			}
+
+			.statistic-category-services {
+				color: #FFCCFF;
+			}
+
+			.kawaii-contract-form,
+			.kawaii-contract-structure-inputs.login > input {
+				border: 5px solid #FFC6FF;
+			}
+
+			.kawaii-contract-main-title.login,
+			.kawaii-contract-structure-inputs.login > label,
+			.kawaii-contract-structure-inputs.login > input {
+				color: #FFC6FF;
+			}
+
 			.kawaii-contract-main-title {
 				padding: 20px;
 				font-family: 'Roboto';
@@ -287,6 +320,7 @@
 				color: #8FC100;
 			}
 
+			.kawaii-contract-login-errors,
 			.kawaii-contract-search-li > label,
 			.kawaii-contract-search-li > select,
 			.kawaii-contract-main-title.search,
@@ -302,6 +336,7 @@
 			.kawaii-contract-list > a,
 			.kawaii-contract-fast-add-li > a,
 			.kawaii-contract-main-title.dashboard,
+			.kawaii-contract-statistics.dashboard,
 			.ourcompany-contract.dashboard,
 			.partner-contract.dashboard,
 			.category-contract.dashboard,
@@ -403,6 +438,7 @@
 			}
 
 			.kawaii-contract-first-block-container,
+			.kawaii-contract-details-block,
 			.kawaii-contract-category-color-inside,
 			.kawaii-contract-details-circle,
 			.kawaii-contract-white-background,
@@ -479,14 +515,24 @@
 				fill: #FF8000;
 			}
 
+			.kawaii-contract-icon-link.all-contracts > .svg-icon path,
 			.kawaii-contract-first-block-container.all-contracts > .kawaii-contract-icon-down-arrow path,
 			.kawaii-contract-provision.all-contracts > .svg-icon path {
 				fill: #8FC100;
 			}
 
+			.kawaii-contract-icon-link.all-contracts:hover > .svg-icon path {
+				fill: #B7D75C;
+			}
+
+			.kawaii-contract-icon-link.search > .svg-icon path,
 			.kawaii-contract-first-block-container.search > .kawaii-contract-icon-down-arrow path,
 			.kawaii-contract-provision.search > .svg-icon path {
 				fill: #FF4343;
+			}
+
+			.kawaii-contract-icon-link.search:hover > .svg-icon path {
+				fill: #FF8787;
 			}
 
 			a > .svg-icon.kawaii-contract-icon.dashboard path,
@@ -503,6 +549,7 @@
 				height: 25px;
 			}
 
+			.kawaii-contract-icon-link,
 			.kawaii-contract-nav-li > a,
 			.kawaii-contract-progress-bar-inside,
 			.kawaii-contract-provision,
@@ -829,8 +876,21 @@
 				fill: #FFCACA;
 			}
 
+			.kawaii-contract-icon-link.last-contracts > .svg-icon path {
+				fill: #007dfb;
+			}
+
+			.kawaii-contract-icon-link.last-contracts:hover > .svg-icon path {
+				fill: #5CACFD;
+			}
+
+			.kawaii-contract-icon-link.in-progress > .svg-icon path,
 			.kawaii-contract-amendement-block.in-progress:hover > .svg-icon path {
 				fill: #5750FF;
+			}
+
+			.kawaii-contract-icon-link.in-progress:hover > .svg-icon path {
+				fill: #948FFF;
 			}
 
 			.kawaii-contract-amendement-block.soon-finish:hover > .svg-icon path {
@@ -888,6 +948,7 @@
 				margin-bottom: 5px;
 			}
 
+			p.kawaii-contract-category-color-inside,
 			.kawaii-contract-structure-inputs > input,
 			.kawaii-contract-structure-inputs > select,
 			.kawaii-contract-structure-inputs > textarea,
@@ -967,14 +1028,33 @@
 				margin-bottom: 10px;
 			}
 
+			.button-submit.login {
+				border: 2px solid #ffc6ff;
+				background-color: #CC9ECC;
+				margin-bottom: 10px;
+			}
+
+			.button-back.login {
+				border: 2px solid #ffc6ff;
+				background-color: #ffffff;
+				margin-bottom: 10px;
+			}
+
 			.button-submit:hover,
 			.button-search:hover {
 				cursor: pointer;
 			}
 
 			.button-submit:hover {
-				border: 2px solid #006E6E;
 				background-color: #00adad;
+			}
+
+			.button-submit.login:hover {
+				background-color: #D6B1D6;
+			}
+
+			.button-back.login:hover {
+				background-color: #F8F1F8;
 			}
 
 			.category-contract,
@@ -987,6 +1067,10 @@
 			.button-back {
 				border: 2px solid #00adad;
 				color: #00adad;
+			}
+
+			.button-back.login {
+				color: #ffc6ff;
 			}
 
 			.button-search {

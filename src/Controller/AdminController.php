@@ -15,12 +15,23 @@ class AdminController extends AbstractController
     {
         $amendements = $amendementRepository->findAll();
         $contracts = $contractRepository->findAll();
-        // $c = $contractRepository->contractDashboard();
-        // dd($c);
+        $nbContracts = $contractRepository->numberOfContracts();
+        $distribution = $contractRepository->numberOfContractsByCategory(1);
+        $partenariat = $contractRepository->numberOfContractsByCategory(2);
+        $vente = $contractRepository->numberOfContractsByCategory(3);
+        $confidentialite = $contractRepository->numberOfContractsByCategory(4);
+        $service = $contractRepository->numberOfContractsByCategory(5);
+        // dd($distribution);
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'AdminController',
             'contracts' => $contracts,
             'amendements' => $amendements,
+            'nbContracts' => $nbContracts,
+            'distribution' => $distribution,
+            'partenariat' => $partenariat,
+            'vente' => $vente,
+            'confidentialite' => $confidentialite,
+            'service' => $service,
         ]);
     }
 }

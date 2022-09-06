@@ -31,7 +31,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setRoles(['ROLE_USER'])->setPassword($this->passwordHasher->hashPassword($user, $form->get('password')->getData()));
+            $user->setRoles(['ROLE_ADMIN'])->setPassword($this->passwordHasher->hashPassword($user, $form->get('password')->getData()));
             $userRepository->add($user);
             return $this->redirectToRoute('user_list', [], Response::HTTP_SEE_OTHER);
         }

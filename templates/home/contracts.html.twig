@@ -65,6 +65,13 @@
 									<p class="name-companies-quality all-contracts">{{contract.ourCompanyQuality}}
 										-
 										{{contract.partnerQuality}}</p>
+									{% if is_granted('ROLE_ADMIN') %}
+										<a class="kawaii-contract-icon-link all-contracts" href="{{path('contract_edit', {id:contract.id})}}">
+											<svg class="svg-icon kawaii-contract-icon all-contracts" viewbox="0 0 20 20">
+												<path fill="none" d="M19.404,6.65l-5.998-5.996c-0.292-0.292-0.765-0.292-1.056,0l-2.22,2.22l-8.311,8.313l-0.003,0.001v0.003l-0.161,0.161c-0.114,0.112-0.187,0.258-0.21,0.417l-1.059,7.051c-0.035,0.233,0.044,0.47,0.21,0.639c0.143,0.14,0.333,0.219,0.528,0.219c0.038,0,0.073-0.003,0.111-0.009l7.054-1.055c0.158-0.025,0.306-0.098,0.417-0.211l8.478-8.476l2.22-2.22C19.695,7.414,19.695,6.941,19.404,6.65z M8.341,16.656l-0.989-0.99l7.258-7.258l0.989,0.99L8.341,16.656z M2.332,15.919l0.411-2.748l4.143,4.143l-2.748,0.41L2.332,15.919z M13.554,7.351L6.296,14.61l-0.849-0.848l7.259-7.258l0.423,0.424L13.554,7.351zM10.658,4.457l0.992,0.99l-7.259,7.258L3.4,11.715L10.658,4.457z M16.656,8.342l-1.517-1.517V6.823h-0.003l-0.951-0.951l-2.471-2.471l1.164-1.164l4.942,4.94L16.656,8.342z"></path>
+											</svg>
+										</a>
+									{% endif %}
 								</div>
 								<p class="name-user all-contracts">Géré par
 									{{contract.user.firstname}}</p>
@@ -148,6 +155,13 @@
 															{{amendement.term}}
 															ans</p>
 														<div class="kawaii-contract-amendement-bar-progress" style="width: {{ amPercent }}%; max-width: 100%;"></div>
+														{% if amPercent < 100 %}
+															<div class="kawaii-contract-amendement-warning all-contracts">
+																<svg class="svg-icon" viewbox="0 0 20 20">
+																	<path d="M18.344,16.174l-7.98-12.856c-0.172-0.288-0.586-0.288-0.758,0L1.627,16.217c0.339-0.543-0.603,0.668,0.384,0.682h15.991C18.893,16.891,18.167,15.961,18.344,16.174 M2.789,16.008l7.196-11.6l7.224,11.6H2.789z M10.455,7.552v3.561c0,0.244-0.199,0.445-0.443,0.445s-0.443-0.201-0.443-0.445V7.552c0-0.245,0.199-0.445,0.443-0.445S10.455,7.307,10.455,7.552M10.012,12.439c-0.733,0-1.33,0.6-1.33,1.336s0.597,1.336,1.33,1.336c0.734,0,1.33-0.6,1.33-1.336S10.746,12.439,10.012,12.439M10.012,14.221c-0.244,0-0.443-0.199-0.443-0.445c0-0.244,0.199-0.445,0.443-0.445s0.443,0.201,0.443,0.445C10.455,14.021,10.256,14.221,10.012,14.221"></path>
+																</svg>
+															</div>
+														{% endif %}
 													</div>
 												{% endif %}
 											{% endfor %}
@@ -305,6 +319,47 @@
 										</svg>
 										<!-- expédition à tel jours après la commande -->
 										{{contract.delivery}}</li>
+									{% if amendements is defined %}
+										<li class="kawaii-contract-provision amendement-lists all-contracts">
+											{% set sumTerm = 0 %}
+											{% for amendement in amendements %}
+												{% set amDateEffect = amendement.dateEffect|date('d-m-Y') %}
+												{% set amDateEnding = amendement.dateEnding|date('d-m-Y') %}
+												{% set today = "now"|date('d-m-Y') %}
+												{% set amTotalDays = date(amDateEnding).diff(date(amDateEffect))%}
+												{% set amDateEffectToday = date(today).diff(date(amDateEffect))%}
+												{% set amPercent = amDateEffectToday.days  * 100 / amTotalDays.days %}
+												{% if amendement.contract.id == contractId %}
+													{% set sumTerm = sumTerm + amendement.term %}
+													<div id="kawaii-contract-amendement-{{amendement.contract.id}}" class="kawaii-contract-amendement-block all-contracts">
+														<svg class="svg-icon" viewbox="0 0 20 20">
+															<path d="M15.396,2.292H4.604c-0.212,0-0.385,0.174-0.385,0.386v14.646c0,0.212,0.173,0.385,0.385,0.385h10.792c0.211,0,0.385-0.173,0.385-0.385V2.677C15.781,2.465,15.607,2.292,15.396,2.292 M15.01,16.938H4.99v-2.698h1.609c0.156,0.449,0.586,0.771,1.089,0.771c0.638,0,1.156-0.519,1.156-1.156s-0.519-1.156-1.156-1.156c-0.503,0-0.933,0.321-1.089,0.771H4.99v-3.083h1.609c0.156,0.449,0.586,0.771,1.089,0.771c0.638,0,1.156-0.518,1.156-1.156c0-0.638-0.519-1.156-1.156-1.156c-0.503,0-0.933,0.322-1.089,0.771H4.99V6.531h1.609C6.755,6.98,7.185,7.302,7.688,7.302c0.638,0,1.156-0.519,1.156-1.156c0-0.638-0.519-1.156-1.156-1.156c-0.503,0-0.933,0.322-1.089,0.771H4.99V3.062h10.02V16.938z M7.302,13.854c0-0.212,0.173-0.386,0.385-0.386s0.385,0.174,0.385,0.386s-0.173,0.385-0.385,0.385S7.302,14.066,7.302,13.854 M7.302,10c0-0.212,0.173-0.385,0.385-0.385S8.073,9.788,8.073,10s-0.173,0.385-0.385,0.385S7.302,10.212,7.302,10 M7.302,6.146c0-0.212,0.173-0.386,0.385-0.386s0.385,0.174,0.385,0.386S7.899,6.531,7.688,6.531S7.302,6.358,7.302,6.146"></path>
+														</svg>
+														<p class="kawaii-contract-amendement-date">Du
+															{{amendement.dateEffect.format('d/m/Y')}}</p>
+														<p class="kawaii-contract-amendement-date">
+															{{amendement.dateEnding.format('d/m/Y')}}</p>
+														<p class="kawaii-contract-amendement-date">
+															{{amendement.term}}
+															ans</p>
+														<div class="kawaii-contract-amendement-bar-progress" style="width: {{ amPercent }}%; max-width: 100%;"></div>
+														{% if amPercent < 100 %}
+															<div class="kawaii-contract-amendement-warning all-contracts">
+																<svg class="svg-icon" viewbox="0 0 20 20">
+																	<path d="M18.344,16.174l-7.98-12.856c-0.172-0.288-0.586-0.288-0.758,0L1.627,16.217c0.339-0.543-0.603,0.668,0.384,0.682h15.991C18.893,16.891,18.167,15.961,18.344,16.174 M2.789,16.008l7.196-11.6l7.224,11.6H2.789z M10.455,7.552v3.561c0,0.244-0.199,0.445-0.443,0.445s-0.443-0.201-0.443-0.445V7.552c0-0.245,0.199-0.445,0.443-0.445S10.455,7.307,10.455,7.552M10.012,12.439c-0.733,0-1.33,0.6-1.33,1.336s0.597,1.336,1.33,1.336c0.734,0,1.33-0.6,1.33-1.336S10.746,12.439,10.012,12.439M10.012,14.221c-0.244,0-0.443-0.199-0.443-0.445c0-0.244,0.199-0.445,0.443-0.445s0.443,0.201,0.443,0.445C10.455,14.021,10.256,14.221,10.012,14.221"></path>
+																</svg>
+															</div>
+														{% endif %}
+													</div>
+												{% endif %}
+											{% endfor %}
+										</li>
+										<li class="kawaii-contract-provision total-term all-contracts">Durée totale :
+											{% set totalTerm = sumTerm + contract.term %}
+											{{ totalTerm }}
+											ans
+										</li>
+									{% endif %}
 								</ul>
 							</div>
 							<div class="kawaii-contract-details-part-list all-contracts">

@@ -86,6 +86,29 @@ class ContractRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function numberOfContracts()
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            "SELECT count(ctt.name)
+            FROM App\Entity\Contract ctt
+            ORDER BY ctt.name"
+        );
+        return $query->getResult();
+    }
+
+    public function numberOfContractsByCategory($val)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            "SELECT count(ctt.name)
+            FROM App\Entity\Contract ctt
+            WHERE ctt.category = $val
+            ORDER BY ctt.name"
+        );
+        return $query->getResult();
+    }
+
     public function contractName()
     {
         $entityManager = $this->getEntityManager();
@@ -114,7 +137,7 @@ class ContractRepository extends ServiceEntityRepository
             ->join('ctt.category', "cat")
             ->where('cat.name = :category')
             ->setParameter('category', $category)
-            ->orderBy('ctt.name', 'ASC')
+            ->orderBy('ctt.status', 'ASC')
             ->getQuery()
             ->getResult();
     }
